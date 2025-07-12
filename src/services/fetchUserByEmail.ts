@@ -1,10 +1,10 @@
 import { supabase } from "@/utils/supabase/client";
 
-export async function fetchUserByStdId(stdId: string) {
+export async function fetchUserByStdEmail(email: string) {
   const { data, error } = await supabase
     .from("group") // or "gruop" if that's your actual table name
     .select("*")
-    .eq("stdId", stdId)
+    .eq("email", email)
     .single();
 
   if (error) {

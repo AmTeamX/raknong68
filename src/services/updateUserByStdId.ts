@@ -7,15 +7,20 @@ import { supabase } from "@/utils/supabase/client";
  * @returns { error, data }
  */
 export async function updateUserByStdId(
-  stdId: string,
+  email: string,
   updates: Record<string, any>,
 ) {
+  const cleanedEmail = email.trim().toLowerCase();
+
   const { data, error } = await supabase
-    .from("group") // Change to "gruop" if that's your actual table name
+    .from("group")
     .update(updates)
-    .eq("stdId", stdId)
+    .ilike("email", cleanedEmail)
     .select()
-    .single();
+
+  if (!data || data.length === 0) {
+    console.log("User not found");
+  }
 
   if (error) {
     return { error: error.message, data: null };

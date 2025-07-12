@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { fetchUserByStdId } from "@/services/fetchUserById";
+import { fetchUserByStdEmail } from "@/services/fetchUserByEmail";
 import { updateUserByStdId } from "@/services/updateUserByStdId";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function EditUserPage() {
-  const { userId } = useParams();
+  const { email } = useParams();
   const [form, setForm] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
@@ -13,13 +13,14 @@ export default function EditUserPage() {
   useEffect(() => {
     async function load() {
       setLoading(true);
-      const { data, error } = await fetchUserByStdId(userId as string);
+      const decodedEmail = decodeURIComponent(email as string); // ✅ decode it here
+      const { data, error } = await fetchUserByStdEmail(decodedEmail);
       if (data) setForm(data);
       else setMessage(error || "User not found");
       setLoading(false);
     }
     load();
-  }, [userId]);
+  }, [email]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,7 +29,8 @@ export default function EditUserPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
-    const { error } = await updateUserByStdId(userId as string, form);
+    const decodedEmail = decodeURIComponent(email as string); // ✅ decode it here
+    const { error } = await updateUserByStdId(decodedEmail, form);
     if (error) {
       setMessage(error);
     } else {
@@ -70,7 +72,6 @@ export default function EditUserPage() {
               name="stdId"
               value={form?.stdId ?? ""}
               onChange={handleChange}
-              disabled
             />
 
             {/* Name */}
@@ -192,6 +193,7 @@ export default function EditUserPage() {
               name="email"
               value={form?.email ?? ""}
               onChange={handleChange}
+              disabled
             />
           </div>
 

@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [stdId, setStdId] = useState("");
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (stdId.trim()) {
-      router.push(`/${stdId.trim()}`);
+    if (email.trim()) {
+      // You can encode the email if needed
+      router.push(`/${encodeURIComponent(email.trim())}`);
     }
   };
 
@@ -26,7 +27,7 @@ export default function Home() {
         Welcome, Freshy!
       </h1>
       <h2 className="text-2xl font-medium text-center text-[#1a3a9a] mb-8">
-        Enter your student ID to receive your ticket for Raknong 2568
+        Enter your email to receive your ticket for Raknong 2568
       </h2>
 
       {/* Form */}
@@ -35,14 +36,10 @@ export default function Home() {
         className="bg-white shadow-lg rounded-xl px-8 py-10 w-full max-w-md flex flex-col items-center gap-6"
       >
         <input
-          type="text"
-          placeholder="Enter Your Student ID Ex : 68xxxxx"
-          value={stdId}
-          onChange={(e) => {
-            // Only allow numbers
-            const val = e.target.value.replace(/[^0-9]/g, "");
-            setStdId(val);
-          }}
+          type="email"
+          placeholder="Enter Your Email Ex : example@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="text-black w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a9a]"
           required
         />
