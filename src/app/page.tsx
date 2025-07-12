@@ -3,14 +3,27 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [email, setEmail] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState<"email" | "stdId">("email");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
-      // You can encode the email if needed
-      router.push(`/${encodeURIComponent(email.trim().toLowerCase())}`);
+    if (searchValue.trim() && !isSubmitting) {
+      setIsSubmitting(true);
+      // Create a query parameter with the type and value
+      const searchParam = new URLSearchParams();
+      searchParam.append("type", searchType);
+      searchParam.append("value", searchValue.trim());
+
+      if (searchType === "email") {
+        // Maintain backward compatibility
+        router.push(`/${encodeURIComponent(searchValue.trim().toLowerCase())}`);
+      } else {
+        // For student ID search
+        router.push(`/search?${searchParam.toString()}`);
+      }
     }
   };
 
@@ -35,19 +48,64 @@ export default function Home() {
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-xl px-8 py-10 w-full max-w-md flex flex-col items-center gap-6"
       >
+        {/* Search Type Toggle */}
+        <div className="flex w-full mb-2">
+          <button
+            type="button"
+            onClick={() => setSearchType("email")}
+            className={`flex-1 py-2 text-center rounded-l-lg transition-all duration-200 ${
+              searchType === "email"
+                ? "bg-[#1a3a9a] text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+            disabled={isSubmitting}
+          >
+            Search by Email
+          </button>
+          <button
+            type="button"
+            onClick={() => setSearchType("stdId")}
+            className={`flex-1 py-2 text-center rounded-r-lg transition-all duration-200 ${
+              searchType === "stdId"
+                ? "bg-[#1a3a9a] text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }`}
+            disabled={isSubmitting}
+          >
+            Search by Student ID
+          </button>
+        </div>
+
         <input
-          type="email"
-          placeholder="Enter Your Email Ex : example@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder={
+            searchType === "email"
+              ? "Enter Your Email Ex: example@email.com"
+              : "Enter Your Student ID Ex: 65XXXXXXXX"
+          }
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
           className="text-black w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a9a]"
           required
+          disabled={isSubmitting}
         />
         <button
           type="submit"
-          className="w-full bg-[#1a3a9a] text-white font-semibold py-3 rounded-lg hover:bg-[#16317d] transition-all duration-200"
+          className={`w-full ${
+            isSubmitting
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-[#1a3a9a] hover:bg-[#16317d]"
+          } text-white font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center`}
+          disabled={isSubmitting}
         >
-          Get My Ticket
+          {isSubmitting ? (
+            <>
+              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              Searching...
+            </>
+          ) : (
+            "Get My Ticket"
+          )}
         </button>
       </form>
     </div>

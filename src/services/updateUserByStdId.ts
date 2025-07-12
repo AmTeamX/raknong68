@@ -15,7 +15,7 @@ export async function updateUserByStdId(
   const { data, error } = await supabase
     .from("group")
     .update(updates)
-    .filter("lower(email)", "eq", cleanedEmail)
+    .filter("email", "eq", cleanedEmail)
     .select();
 
   if (!data || data.length === 0) {

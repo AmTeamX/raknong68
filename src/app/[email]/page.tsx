@@ -1,11 +1,14 @@
 "use client";
 import { fetchUserByStdEmail } from "@/services/fetchUserByEmail";
+import { fetchUserByStdId } from "@/services/fetchUserByStdId";
 import { updateUserByStdId } from "@/services/updateUserByStdId";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function EditUserPage() {
   const { email } = useParams();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [form, setForm] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
@@ -13,14 +16,33 @@ export default function EditUserPage() {
   useEffect(() => {
     async function load() {
       setLoading(true);
-      const decodedEmail = decodeURIComponent(email as string); // ✅ decode it here
-      const { data, error } = await fetchUserByStdEmail(decodedEmail);
-      if (data) setForm(data);
-      else setMessage(error || "User not found");
+
+      // Check if we're coming from a stdId search
+      const stdId = searchParams.get("stdId");
+
+      if (stdId) {
+        // If we have a stdId parameter, fetch by stdId
+        const { data, error } = await fetchUserByStdId(stdId);
+        if (data) setForm(data);
+        else {
+          setMessage(error || "User not found");
+          router.push(`/no-user-found?type=stdId`);
+        }
+      } else {
+        // Otherwise, fetch by email as before
+        const decodedEmail = decodeURIComponent(email as string); // ✅ decode it here
+        const { data, error } = await fetchUserByStdEmail(decodedEmail);
+        if (data) setForm(data);
+        else {
+          setMessage(error || "User not found");
+          router.push(`/no-user-found?type=email`);
+        }
+      }
+
       setLoading(false);
     }
     load();
-  }, [email]);
+  }, [email, searchParams, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -48,14 +70,15 @@ export default function EditUserPage() {
       </div>
     );
   if (!form) {
-    if (message === "No user found or error fetching data.") {
-      // Redirect to no-user-found page
-      if (typeof window !== "undefined") {
-        window.location.href = "/no-user-found";
-      }
-      return null;
-    }
-    return <div className="p-8 text-red-500">{message}</div>;
+    // Error message will be displayed while redirecting
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-[#e2f3ff] to-[#c2e0f7] p-4">
+        <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full text-center">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-700">Redirecting to error page...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -193,7 +216,6 @@ export default function EditUserPage() {
               name="email"
               value={form?.email ?? ""}
               onChange={handleChange}
-              disabled
             />
           </div>
 
