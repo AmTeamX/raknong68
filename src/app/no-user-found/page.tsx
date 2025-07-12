@@ -10,21 +10,28 @@ export default function NoUserFound() {
         <p className="text-gray-700 text-lg mb-8">
           ไม่พบข้อมูลสำหรับรหัสนักศึกษาที่คุณกรอก หรือเกิดข้อผิดพลาดในการค้นหา
         </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
           <a
             href="/"
-            className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold px-6 py-3 rounded-md shadow"
+            className="bg-blue-600 hover:bg-blue-700 transition text-white font-semibold px-6 py-3 rounded-md shadow "
           >
             🔙 กลับไปหน้าหลัก
           </a>
+
           <a
-            href="https://www.instagram.com/smo.mahidol/"
-            className="bg-gray-600 hover:bg-gray-700 transition text-white font-semibold px-6 py-3 rounded-md shadow"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdhxaSPcucVvINic5XcqgDe5lgWFWoEJzPzDTx6JC2eTdrsFQ/viewform"
+            className="bg-green-600 hover:bg-green-700 transition text-white font-semibold px-6 py-3 rounded-md shadow"
           >
-            📩 ติดต่อเรา
+            📩 ลงทะเบียนรอบ 2 ตรงนี้เลย
           </a>
-        </div>
+        </div><a
+          href="https://www.instagram.com/smo.mahidol/"
+          className="text-red-500 font-semibold px-6 py-8 rounded-md shaow mt-24"
+        >
+          ติดต่อเรา
+        </a>
       </div>
-    </div>
+
+    </div >
   );
 }
