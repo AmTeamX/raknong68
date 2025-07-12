@@ -60,7 +60,7 @@ export default function EditUserPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-tr from-blue-100 to-blue-200 p-4">
       <div className="bg-white shadow-xl rounded-lg w-full max-w-3xl p-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-[#1a3a9a]">
-          Edit Your Information
+          Please Check And Edit Your Information
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
