@@ -15,8 +15,8 @@ export async function updateUserByStdId(
   const { data, error } = await supabase
     .from("group")
     .update(updates)
-    .ilike("email", cleanedEmail)
-    .select()
+    .filter("lower(email)", "eq", cleanedEmail)
+    .select();
 
   if (!data || data.length === 0) {
     console.log("User not found");

@@ -10,7 +10,7 @@ export default function Home() {
     e.preventDefault();
     if (email.trim()) {
       // You can encode the email if needed
-      router.push(`/${encodeURIComponent(email.trim())}`);
+      router.push(`/${encodeURIComponent(email.trim().toLowerCase())}`);
     }
   };
 
