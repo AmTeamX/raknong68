@@ -216,6 +216,7 @@ export default function EditUserPage() {
               name="email"
               value={form?.email ?? ""}
               onChange={handleChange}
+              disabled
             />
           </div>
 
