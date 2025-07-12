@@ -1,12 +1,9 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { } from "next/navigation";
 
 import { Suspense } from "react";
 export default function NoUserFound() {
-  const searchParams = useSearchParams();
-  const searchType = searchParams.get("type") || "email";
 
-  const searchTypeText = searchType === "stdId" ? "รหัสนักศึกษา" : "อีเมล";
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -16,8 +13,7 @@ export default function NoUserFound() {
             ไม่พบข้อมูลผู้ใช้
           </h1>
           <p className="text-gray-700 text-lg mb-8">
-            ไม่พบข้อมูลสำหรับ{searchTypeText}ที่คุณกรอก
-            หรือเกิดข้อผิดพลาดในการค้นหา
+            ไม่พบข้อมูลสำหรับคุณ
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
             <a
