@@ -20,8 +20,7 @@ export default function SearchPage() {
       const searchValue = searchParams.get("value");
 
       if (!searchType || !searchValue) {
-        setError("Missing search parameters");
-        setLoading(false);
+        router.push(`/no-user-found?type=invalid`);
         return;
       }
 
@@ -33,47 +32,39 @@ export default function SearchPage() {
         } else if (searchType === "stdId") {
           result = await fetchUserByStdId(searchValue);
         } else {
-          setError("Invalid search type");
-          setLoading(false);
+          router.push(`/no-user-found?type=invalid`);
           return;
         }
 
         if (result.error) {
-          setError(result.error);
-          setLoading(false);
+          router.push(`/no-user-found?type=${searchType}`);
           return;
         }
 
         if (result.data && Object.keys(result.data).length > 0) {
-          // If user found, redirect to their page
           if (searchType === "email") {
-            // Use existing route structure for email searches
             router.push(`/${encodeURIComponent(searchValue.toLowerCase())}`);
           } else {
-            // For stdId searches, we'll redirect to the email route with stdId as a query parameter
-            // This allows the email page to know this was a stdId search
             const email = result.data.email;
             if (email) {
               router.push(
-                `/${encodeURIComponent(email.toLowerCase())}?stdId=${encodeURIComponent(searchValue)}`,
+                `/${encodeURIComponent(email.toLowerCase())}?stdId=${encodeURIComponent(searchValue)}`
               );
             } else {
-              setError("User found but email is missing");
-              setLoading(false);
+              router.push(`/no-user-found?type=${searchType}`);
             }
           }
         } else {
-          // Pass the search type to no-user-found page
           router.push(`/no-user-found?type=${searchType}`);
         }
       } catch (err) {
-        setError("An unexpected error occurred");
-        setLoading(false);
+        router.push(`/no-user-found?type=${searchParams.get("type") || "unknown"}`);
       }
     }
 
     fetchUser();
   }, [searchParams, router]);
+
 
   if (loading && !notFound) {
     return (
