@@ -36,9 +36,13 @@ export default function Home() {
       >
         <input
           type="text"
-          placeholder="Enter your Student ID"
+          placeholder="Enter your Student ID Ex : 66xxxxx"
           value={stdId}
-          onChange={(e) => setStdId(e.target.value)}
+          onChange={(e) => {
+            // Only allow numbers
+            const val = e.target.value.replace(/[^0-9]/g, "");
+            setStdId(val);
+          }}
           className="text-black w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a9a]"
           required
         />

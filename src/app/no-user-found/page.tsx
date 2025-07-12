@@ -18,7 +18,7 @@ export default function NoUserFound() {
             🔙 กลับไปหน้าหลัก
           </a>
           <a
-            href="mailto:support@example.com?subject=ไม่พบข้อมูลผู้ใช้"
+            href="https://www.instagram.com/smo.mahidol/"
             className="bg-gray-600 hover:bg-gray-700 transition text-white font-semibold px-6 py-3 rounded-md shadow"
           >
             📩 ติดต่อเรา
