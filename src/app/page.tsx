@@ -36,7 +36,7 @@ export default function Home() {
       >
         <input
           type="text"
-          placeholder="Enter your Student ID Ex : 68xxxxx"
+          placeholder="Enter Your Student ID Ex : 68xxxxx"
           value={stdId}
           onChange={(e) => {
             // Only allow numbers
