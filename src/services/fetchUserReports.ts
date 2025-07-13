@@ -5,10 +5,10 @@ import { supabase } from "@/utils/supabase/client";
  */
 export interface UserReport {
   id: number;
-  stdId: string;
+  std_id: string;
   email: string;
   report_type: "uid" | "email";
-  reportMessage: string;
+  report_message: string;
   status: "pending" | "resolved" | "rejected";
   created_at: string;
   updated_at: string;

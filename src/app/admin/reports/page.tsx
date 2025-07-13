@@ -192,7 +192,7 @@ export default function AdminReportsPage() {
                       {report.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
-                      {report.stdId || "-"}
+                      {report.std_id || "-"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-black">
                       {report.email || "-"}
@@ -259,7 +259,7 @@ export default function AdminReportsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-black">
                 <div>
                   <p className="text-sm text-black">Student ID</p>
-                  <p className="font-medium">{selectedReport.stdId || "-"}</p>
+                  <p className="font-medium">{selectedReport.std_id || "-"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-black">Email</p>
@@ -306,7 +306,7 @@ export default function AdminReportsPage() {
                 <p className="text-sm text-black mb-1">User Message</p>
                 <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
                   <p className="whitespace-pre-wrap text-black">
-                    {selectedReport.reportMessage}
+                    {selectedReport.report_message}
                   </p>
                 </div>
               </div>
