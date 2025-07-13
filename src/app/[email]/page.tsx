@@ -95,6 +95,7 @@ export default function EditUserPage() {
               name="stdId"
               value={form?.stdId ?? ""}
               onChange={handleChange}
+              disabled
             />
 
             {/* Name */}
