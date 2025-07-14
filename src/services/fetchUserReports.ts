@@ -7,7 +7,7 @@ export interface UserReport {
   id: number;
   std_id: string;
   email: string;
-  report_type: "uid" | "email";
+  report_type: "uid" | "email" | "name";
   report_message: string;
   status: "pending" | "resolved" | "rejected";
   created_at: string;

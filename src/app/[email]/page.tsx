@@ -1,8 +1,8 @@
 "use client";
 import { fetchUserByStdEmail } from "@/services/fetchUserByEmail";
 import { fetchUserByStdId } from "@/services/fetchUserByStdId";
-import { updateUserByStdId } from "@/services/updateUserByStdId";
 import { submitUserReport } from "@/services/submitUserReport";
+import { updateUserByStdId } from "@/services/updateUserByStdId";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function EditUserPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
-  const [reportType, setReportType] = useState<"uid" | "email">("uid");
+  const [reportType, setReportType] = useState<"uid" | "email" | "name">("uid");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -143,6 +143,8 @@ export default function EditUserPage() {
               name="name"
               value={form?.name ?? ""}
               onChange={handleChange}
+              disabled
+
             />
 
             {/* Nickname */}
@@ -151,6 +153,7 @@ export default function EditUserPage() {
               name="nickname"
               value={form?.nickname ?? ""}
               onChange={handleChange}
+              disabled
             />
 
             {/* Faculty */}
@@ -326,6 +329,15 @@ export default function EditUserPage() {
                       />
                       Email issue
                     </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        checked={reportType === "name"}
+                        onChange={() => setReportType("name")}
+                        className="mr-2"
+                      />
+                      Name issue
+                    </label>
                   </div>
 
                   <textarea
@@ -333,9 +345,7 @@ export default function EditUserPage() {
                     onChange={(e) => setReportMessage(e.target.value)}
                     className="w-full border border-gray-300 rounded-lg p-3 h-32 focus:outline-none focus:ring-2 focus:ring-[#1a3a9a]"
                     placeholder={
-                      reportType === "uid"
-                        ? "Describe the issue with your Student ID..."
-                        : "Describe the issue with your email..."
+                      ` Describe the issue with your ${reportType}...`
                     }
                     required
                     disabled={isSubmitting}
@@ -370,8 +380,9 @@ export default function EditUserPage() {
             )}
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
 
