@@ -237,7 +237,7 @@ export default function EditUserPage() {
 
             {/* Additional Fields */}
             <InputField
-              label="Food (อาหารที่ไม่ทาน)"
+              label="Food (อาหาร เช่น ฮาลาล, มังสวิรัติ)"
               name="reqfood"
               value={form?.reqfood ?? ""}
               onChange={handleChange}
