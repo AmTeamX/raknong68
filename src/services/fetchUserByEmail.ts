@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase/client";
 
 export async function fetchUserByStdEmail(email: string) {
   const { data, error } = await supabase
-    .from("group") // or "gruop" if that's your actual table name
+    .from("rk_group") // or "gruop" if that's your actual table name
     .select("*")
     .eq("email", email)
     .single();

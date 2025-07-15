@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase/client";
 
 export async function fetchUserByStdId(stdId: string) {
   const { data, error } = await supabase
-    .from("group")
+    .from("rk_group")
     .select("*")
     .eq("stdId", stdId)
     .single();

@@ -13,7 +13,7 @@ export async function updateUserByStdId(
   const cleanedEmail = email.trim().toLowerCase();
 
   const { data, error } = await supabase
-    .from("group")
+    .from("rk_group")
     .update(updates)
     .filter("email", "eq", cleanedEmail)
     .select();

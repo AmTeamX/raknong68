@@ -237,9 +237,9 @@ export default function EditUserPage() {
 
             {/* Additional Fields */}
             <InputField
-              label="Food (อาหาร เช่น ฮาลาล, มังสวิรัติ)"
-              name="reqfood"
-              value={form?.reqfood ?? ""}
+              label="Dietary restrictions (ข้อจำกัดด้านอาหาร เช่น ฮาลาล, มังสวิรัติ)"
+              name="diereq"
+              value={form?.diereq ?? ""}
               onChange={handleChange}
             />
             <InputField
