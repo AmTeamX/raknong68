@@ -23,12 +23,12 @@ export default function NoUserFound() {
               🔙 กลับไปหน้าหลัก
             </a>
 
-            {/* <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScfLpap0vnHT3Z8okDq4WDXD0HswgcEnK22eY4Nyc-v2jh6xA/viewform?usp=dialog"
+            <a
+              href="https://lin.ee/1JQE2tE"
               className="bg-green-600 hover:bg-green-700 transition text-white font-semibold px-6 py-3 rounded-md shadow"
             >
-              📩 มั่นใจว่าลงแล้ว กรอกฟอร์มตกหล่นที่นี่เลย
-            </a> */}
+              📩 ติดต่อผู้ดูแลระบบ
+            </a>
           </div>
           <a
             href="https://www.instagram.com/smo.mahidol/"
